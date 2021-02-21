@@ -9,7 +9,10 @@ Proyecto realizado con python y Django para el Backend y React y Redux en el fro
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
-pip install foobar
+cd api/
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
