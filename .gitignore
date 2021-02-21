@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__
+node_modules
+.vscode/settings.json
+frontend/package-lock.json
+api/media_devel/
+local_settings.py
