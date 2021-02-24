@@ -1,9 +1,49 @@
+@import '../../../node_modules/antd/dist/antd.css';
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+// Componentes
+@import './colors.scss';
+@import './components/buttons.scss';
+@import './components/header.scss';
+@import './components/footer.scss';
+
+@import url(http://fonts.googleapis.com/css?family=Poppins);
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background-color: #FFF;
+  font-family: 'Poppins' !important;
+  background-color: #000;
 }
+
+// Textos
+h1, .h1 {
+  font-size: 45pt;
+  font-weight: bold;
+}
+h2, .h2 {
+  font-size: 40pt;
+}
+h3, .h3 {
+  font-size: 35pt;
+}
+h4, .h4 {
+  font-size: 30pt;
+}
+h5, .h5 {
+  font-size: 25pt;
+}
+span, .span {
+  font-size: 16pt;
+}
+p, .p {
+  font-size: 14pt;
+}
+label, .label {
+  font-size: 14pt;
+}
+
 
 // Utils
 .flex-1 {

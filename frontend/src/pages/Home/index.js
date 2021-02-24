@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import logo from '../../assets/static/logo.svg';
+import background from '../../assets/static/background.jpg';
 import './home.scss';
-// import './home.css';
 
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <p className="App-intro">
-                    To get started, edit <code>src/components/App.js</code> and save to reload.
-                </p>
-                <h1>fdafdfd</h1>
+            <div className="w-100">
+                <div
+                    style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.5) 0%,#000000 100%), url(${background})`}}
+                    className="portada"
+                >
+                    <div className="">
+                        <h5 className="blanco">Ahora online</h5>
+                        <h1 className="blanco">¡Disfruta de las mejores peliculas!</h1>
+                        <button className="btn btn-primary mt-4">Ver Estrenos</button>
+
+                    </div>
+                </div>
+                <div className="estrenos">
+                </div>
             </div>
         );
     }

@@ -1,0 +1,50 @@
+.header {
+    width: 100%;
+    display: flex;
+    position: sticky;
+    background-color: #FFF;
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+        flex: 1
+    }
+
+    .header-title {
+        font-size: 18pt;
+        margin-left: 1rem;
+    }
+
+    .header-menu {
+        display: flex;
+        flex: 6;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 3rem;
+
+        span {
+            font-size: 14pt;
+        }
+    }
+
+    .ant-menu-horizontal {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .ant-menu-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .ant-menu-item-selected, .ant-menu-item:hover {
+        color: $primary !important;
+        border-color: $primary !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .header-menu {
+        display: none !important;
+    }
+}

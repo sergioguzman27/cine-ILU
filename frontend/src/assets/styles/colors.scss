@@ -1,0 +1,53 @@
+$primary: #4f81c7;
+$secondary: #f0d78c;
+$alter1: #64c4ed;
+$alter2: #e7e7de;
+$danger: #bb1542;
+$blanco: #FFF;
+$negro: #000;
+
+// Clases de colores
+.primary {
+    color: $primary;
+}
+.secondary {
+    color: $secondary;
+}
+.alter1 {
+    color: $alter1;
+}
+.alter2 {
+    color: $alter2;
+}
+.danger {
+    color: $danger;
+}
+.blanco {
+    color: $blanco;
+}
+.negro {
+    color: $negro;
+}
+
+// Clases para backgrounds
+.bg-primary {
+    background-color: $primary;
+}
+.bg-secondary {
+    background-color: $secondary;
+}
+.bg-alter1 {
+    background-color: $alter1;
+}
+.bg-alter2 {
+    background-color: $alter2;
+}
+.bg-danger {
+    background-color: $danger;
+}
+.bg-blanco {
+    background-color: $blanco;
+}
+.bg-negro {
+    background-color: $negro;
+}
