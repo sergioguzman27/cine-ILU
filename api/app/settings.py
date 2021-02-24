@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'api',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'debug_toolbar',
 ]
 
