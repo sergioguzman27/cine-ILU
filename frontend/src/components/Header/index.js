@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Menu } from 'antd';
-import { HomeFilled, VideoCameraFilled, PlaySquareFilled } from '@ant-design/icons';
+import { HomeFilled, VideoCameraFilled, PlaySquareFilled, HourglassFilled } from '@ant-design/icons';
 import logo from '../../assets/static/movie.svg';
 
 const Header = (props) => {
@@ -17,11 +17,14 @@ const Header = (props) => {
                     <Menu.Item key="home" icon={<HomeFilled />}>
                         Home
                     </Menu.Item>
-                    <Menu.Item key="news" icon={<VideoCameraFilled />}>
+                    <Menu.Item key="estrenos" icon={<VideoCameraFilled />}>
                         Estrenos
                     </Menu.Item>
                     <Menu.Item key="salas" icon={<PlaySquareFilled />}>
                         Salas
+                    </Menu.Item>
+                    <Menu.Item key="proximamente" icon={<HourglassFilled />}>
+                        Proximamente
                     </Menu.Item>
                 </Menu>
             </div>

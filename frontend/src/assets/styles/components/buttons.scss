@@ -1,0 +1,28 @@
+@import '../colors.scss';
+
+.btn{
+    font-size: 16pt;
+    border-radius: 0.3rem;
+    border: none !important;
+    padding: 10px 35px 10px 35px;
+}
+
+.btn:focus,
+.btn:hover {
+    box-shadow: none !important;
+}
+
+.btn-primary{
+    background-color: $primary;
+    color: $blanco;
+}
+
+.btn-secondary{
+    background-color: $secondary;
+    color: $negro;
+}
+
+.btn-primary:focus,
+.btn-primary:hover{
+    background-color: $alter1 !important;
+}
