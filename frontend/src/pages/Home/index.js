@@ -5,7 +5,7 @@ import './home.scss';
 class App extends Component {
     render() {
         return (
-            <div className="App">
+            <div className="w-100">
                 <div
                     style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.5) 0%,#000000 100%), url(${background})`}}
                     className="portada"

@@ -11,7 +11,7 @@ class BaseRoute extends Component {
             <Route {...rest} render={props => (
                 <Fragment>
                     <Header />
-                    <div className="w-100">
+                    <div className="container-fluid px-0">
                         <Component {...props} />
                     </div>
                     <Footer />
