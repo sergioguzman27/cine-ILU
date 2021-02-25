@@ -6,7 +6,9 @@ from api import viewsets
 
 
 router = DefaultRouter()
-router.register(r'test', viewsets.TestViewset)
+router.register(r'funciones', viewsets.FuncionesViewset)
+router.register(r'peliculas', viewsets.PeliculasViewSet, basename='peliculas')
+router.register(r'salas', viewsets.SalaViewset)
 
 
 urlpatterns = [

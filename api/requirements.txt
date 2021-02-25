@@ -12,5 +12,6 @@ django-six==1.0.4
 django-templated-email==2.3.0
 djangorestframework==3.11.0
 mysqlclient==1.4.6
+requests==2.22.0
 pytz==2017.3
 Pillow==8.1.0
