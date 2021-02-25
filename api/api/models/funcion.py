@@ -13,7 +13,6 @@ class Funcion(models.Model):
 
     pelicula_id = models.IntegerField()
     precio = models.FloatField(default=0)
-    fecha = models.DateField()
-    hora_inicio = models.TimeField()
-    hora_fin = models.TimeField()
+    fecha_hora_inicio = models.DateTimeField()
+    fecha_hora_fin = models.DateTimeField()
     activa = models.BooleanField(default=True)

@@ -5,7 +5,8 @@ class Sala(models.Model):
 
     nombre = models.CharField(max_length=50)
     filas = models.IntegerField()
-    asientos = models.IntegerField()
+    asientos_fila = models.IntegerField()
+    asientos = models.IntegerField(default=0)
     precio_base = models.FloatField(default=0)
     activa = models.BooleanField(default=True)
 

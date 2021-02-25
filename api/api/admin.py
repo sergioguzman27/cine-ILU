@@ -1,11 +1,33 @@
 from django.contrib import admin
-from api.models import Sala, Funcion
+from api.models import Sala, Funcion, Butaca
 
 # Register your models here.
 @admin.register(Sala)
 class SalaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'filas', 'asientos', 'precio_base', 'activa')
+    fields = ('nombre', 'filas', 'asientos_fila', 'precio_base', 'activa')
+    list_display = ('nombre', 'asientos', 'precio_base', 'activa')
+    
+    def response_add(self, request, obj, post_url_continue=None):
+        obj.asientos = obj.filas * obj.asientos_fila
+        obj.save()
+        return super().response_add(request, obj, post_url_continue)
+
 
 @admin.register(Funcion)
 class FuncionAdmin(admin.ModelAdmin):
-    list_display = ('sala', 'pelicula_id', 'precio', 'fecha', 'hora_inicio', 'hora_fin', 'activa')
+    fields = ('sala', 'pelicula_id', 'precio', 'fecha_hora_inicio', 'fecha_hora_fin')
+    list_display = ('sala', 'pelicula_id', 'precio', 'fecha_hora_inicio', 'fecha_hora_fin', 'activa')
+
+    def response_add(self, request, obj, post_url_continue=None):
+        filas = obj.sala.filas
+        columnas = obj.sala.asientos_fila
+
+        for i in range(0, filas):
+            for j in range(0, columnas):
+                Butaca.objects.create(
+                    funcion=obj,
+                    fila=i,
+                    numero_asiento=j+1
+                )
+        obj.save()
+        return super().response_add(request, obj, post_url_continue)
