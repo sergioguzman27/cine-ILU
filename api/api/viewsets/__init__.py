@@ -1,1 +1,3 @@
-from .test import TestViewset
+from .salas import SalaViewset
+from .funciones import FuncionesViewset
+from .peliculas import PeliculasViewSet
