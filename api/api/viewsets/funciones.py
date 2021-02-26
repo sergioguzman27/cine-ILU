@@ -1,8 +1,6 @@
-from django.core.files import File
+from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, filters, viewsets
-from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -25,6 +23,12 @@ class FuncionesViewset(viewsets.ModelViewSet):
             return FuncionDetailSerializer
         return FuncionSerializer
 
+    def get_queryset(self):
+        queryset = self.queryset;
+        queryset = queryset.filter(fecha_hora_inicio__gte=timezone.now())
+        return queryset
+
+
     def get_permissions(self):
         permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
@@ -33,3 +37,6 @@ class FuncionesViewset(viewsets.ModelViewSet):
     #     queryset = self.filter_queryset(self.get_queryset())
     #     serializer = self.get_serializer(queryset, many=True)
     #     return Response(serializer.data)
+
+    # @action(methods=["get"], detail=False)
+    # def proximamente(self, request, *args, **kwargs):

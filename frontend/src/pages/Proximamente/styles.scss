@@ -1,8 +1,4 @@
-.App {
-  // text-align: center;
-}
-
-.portada {
+.portada-proximamente {
   width: 100%;
   height: 80vh;
 
@@ -17,16 +13,16 @@
   justify-content: center;
 }
 
-.estrenos {
+.proximamente {
   width: 100%;
   padding: 1rem 5rem;
 }
 
 @media (max-width: 992px) {
-  .portada {
+  .portada-proximamente {
     padding: 0 1rem;
   }
-  .estrenos {
+  .proximamente {
     padding: 1rem 1rem !important;
   }
 }

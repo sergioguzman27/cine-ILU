@@ -9,6 +9,7 @@ from api.serializers import SalaSerializer, ButacaSerializer
 
 class FuncionSerializer(serializers.ModelSerializer):
     pelicula = serializers.SerializerMethodField()
+    sala = SalaSerializer()
     class Meta:
         model = Funcion
         fields = '__all__'

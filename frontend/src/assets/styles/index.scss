@@ -7,6 +7,8 @@
 @import './components/buttons.scss';
 @import './components/header.scss';
 @import './components/footer.scss';
+@import './components/cards.scss';
+@import './components/modal.scss';
 
 @import url(http://fonts.googleapis.com/css?family=Poppins);
 
@@ -35,13 +37,20 @@ h5, .h5 {
   font-size: 25pt;
 }
 span, .span {
-  font-size: 16pt;
+  font-size: 14pt;
 }
 p, .p {
-  font-size: 14pt;
+  font-size: 12pt;
 }
 label, .label {
   font-size: 14pt;
+}
+
+.bold {
+  font-weight: bold;
+}
+.uppercase {
+  text-transform: uppercase !important;
 }
 
 

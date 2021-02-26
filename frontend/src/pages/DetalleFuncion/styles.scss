@@ -1,0 +1,50 @@
+@import '../../assets/styles/colors.scss';
+.detalle-funcion {
+    .portada {
+        align-items: flex-start;
+
+    }
+}
+
+titulo {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.funcion-contenido {
+    width: 100%;
+    background-color: transparent;
+    margin: 5rem 0;
+    padding: 0 10rem;
+
+    p {
+        font-size: 14pt;
+    }
+}
+
+.text-small {
+    display: flex;
+    align-items: center;
+    font-size: 12pt;
+    color: $blanco;
+}
+
+@media (max-width: 992px) {
+    .portada {
+        h1 {
+            font-size: 35pt;
+            padding: 0 !important;
+        }
+    }
+    .funcion-contenido {
+        padding: 0;
+    }
+
+    .carousel-responsive {
+        width: 100% !important;
+    }
+}

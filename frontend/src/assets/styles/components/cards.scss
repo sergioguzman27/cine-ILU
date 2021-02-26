@@ -1,0 +1,89 @@
+@import "../colors.scss";
+
+.card-pelicula {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  background-color: transparent;
+
+  .card-pelicula-poster {
+    display: flex;
+    width: 100%;
+    // flex: 0.;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .card-pelicula-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1.5rem 0;
+
+    .titulo {
+      display: block;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .pelicula-datos {
+    span,
+    .text-small {
+      font-size: 10pt;
+      color: $blanco;
+    }
+  }
+}
+
+.parrafo-cortado {
+  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-proximamente {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: row;
+  background-color: transparent;
+
+  .pelicula-poster {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pelicula-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    // align-items: center;
+  }
+
+  p {
+    font-size: 14pt;
+  }
+}
+
+@media (max-width: 992px) {
+  .card-proximamente {
+    flex-direction: column;
+
+    .pelicula-info {
+      margin-top: 1.5rem;
+    }
+  }
+}
