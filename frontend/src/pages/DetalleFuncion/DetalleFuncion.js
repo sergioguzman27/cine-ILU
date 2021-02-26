@@ -34,7 +34,7 @@ class DetalleFuncion extends Component {
     render() {
         const { item, videos, imagenes } = this.props;
         return (
-            <div className="w-100">
+            <div className="detalle-funcion w-100">
                 {(item && item.id) && (
                     <Fragment>
                         <div
