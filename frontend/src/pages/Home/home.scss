@@ -19,5 +19,14 @@
 
 .estrenos {
   width: 100%;
-  height: 80vh;
+  padding: 1rem 5rem;
+}
+
+@media (max-width: 992px) {
+  .portada {
+    padding: 0 1rem;
+  }
+  .estrenos {
+    padding: 1rem 1rem !important;
+  }
 }

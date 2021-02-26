@@ -18,7 +18,7 @@ const Header = (props) => {
                         Home
                     </Menu.Item>
                     <Menu.Item key="estrenos" icon={<VideoCameraFilled />}>
-                        Estrenos
+                        Funciones
                     </Menu.Item>
                     <Menu.Item key="salas" icon={<PlaySquareFilled />}>
                         Salas

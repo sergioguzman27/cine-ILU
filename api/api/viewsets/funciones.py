@@ -1,8 +1,5 @@
-from django.core.files import File
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, filters, viewsets
-from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -33,3 +30,6 @@ class FuncionesViewset(viewsets.ModelViewSet):
     #     queryset = self.filter_queryset(self.get_queryset())
     #     serializer = self.get_serializer(queryset, many=True)
     #     return Response(serializer.data)
+
+    # @action(methods=["get"], detail=False)
+    # def proximamente(self, request, *args, **kwargs):
