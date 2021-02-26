@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import background from '../../assets/static/background.jpg';
 import CardPelicula from '../../components/Cards'
 import './home.scss';
@@ -20,7 +21,7 @@ class Home extends Component {
                     <div className="">
                         <h5 className="uppercase danger">Ahora online</h5>
                         <h1 className="uppercase blanco">¡Disfruta de las mejores peliculas!</h1>
-                        <button className="btn btn-primary mt-4">Ver funciones</button>
+                        <Link className="btn btn-primary mt-4" to={`/funciones`}>Ver funciones</Link>
                     </div>
                 </div>
                 <div className="estrenos">

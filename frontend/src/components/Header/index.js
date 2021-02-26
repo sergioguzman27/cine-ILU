@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { withRouter } from "react-router-dom";
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { HomeFilled, VideoCameraFilled, PlaySquareFilled, HourglassFilled } from '@ant-design/icons';
 import logo from '../../assets/static/movie.svg';
@@ -21,8 +21,10 @@ const Header = (props) => {
     return (
         <div className="header mb-2">
             <div className="header-logo pl-md-5 pl-4 mr-5">
-                <img style={{width: '3.5rem'}} src={logo} />
-                <span className="header-title">Chejo Movies</span>
+                <Link className="d-flex align-items-center" to="/">
+                    <img style={{width: '3.5rem'}} src={logo} />
+                    <span className="header-title">Chejo Movies</span>
+                </Link>
             </div>
             <div className="header-menu">
                 <Menu onClick={navegar} selectedKeys={[current]} mode="horizontal">

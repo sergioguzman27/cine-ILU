@@ -8,6 +8,9 @@ const PROXIMAMENTE = 'PELICULAS_PROXIMAMENTE';
 const ESTRENOS = 'PELICULAS_ESTRENOS';
 const FUNCIONES = 'PELICULAS_FUNCIONES';
 const PAGE = 'PELICULAS_PAGE';
+const ITEM = 'PELICULAS_ITEM';
+const VIDEOS = 'PELICULAS_VIDEOS';
+const IMAGENES = 'PELICULAS_IMAGENES';
 
 // ------------------------------------
 // Pure Actions
@@ -60,11 +63,45 @@ const getFunciones = (page = 1) => (dispatch) => {
     })
 };
 
+const getFuncion = (id) => (dispatch) => {
+    dispatch(setLoader(true));
+    api.get(`funciones/${id}`).then(response => {
+        dispatch(setData(response, ITEM));
+        if (response.pelicula) {
+            dispatch(getVideos(response.pelicula.id))
+            dispatch(getImagenes(response.pelicula.id))
+        }
+    }).finally(() => {
+        dispatch(setLoader(false));
+    })
+};
+
+const getVideos = (id) => (dispatch) => {
+    dispatch(setLoader(true));
+    api.get('peliculas/trailers', { id }).then(response => {
+        if (response.results)
+        dispatch(setData(response.results, VIDEOS));
+    }).finally(() => {
+        dispatch(setLoader(false));
+    })
+};
+
+const getImagenes = (id) => (dispatch) => {
+    dispatch(setLoader(true));
+    api.get('peliculas/imagenes', { id }).then(response => {
+        if (response.backdrops)
+        dispatch(setData(response.backdrops, IMAGENES));
+    }).finally(() => {
+        dispatch(setLoader(false));
+    })
+};
+
 
 export const actions = {
     getProximamente,
     getEstrenos,
     getFunciones,
+    getFuncion,
 };
 
 export const reducers = {
@@ -98,6 +135,24 @@ export const reducers = {
             page,
         };
     },
+    [ITEM]: (state, { data }) => {
+        return {
+            ...state,
+            item: data,
+        };
+    },
+    [VIDEOS]: (state, { data }) => {
+        return {
+            ...state,
+            videos: data,
+        };
+    },
+    [IMAGENES]: (state, { data }) => {
+        return {
+            ...state,
+            imagenes: data,
+        };
+    },
 };
 
 export const initialState = {
@@ -109,6 +164,9 @@ export const initialState = {
         results: []
     },
     page: 1,
+    item: {},
+    videos: [],
+    imagenes: []
 };
 
 export default handleActions(reducers, initialState);

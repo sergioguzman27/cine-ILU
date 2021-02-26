@@ -6,6 +6,7 @@ import BaseRoute from './Route';
 import Home from './pages/Home';
 import Proximamente from './pages/Proximamente';
 import Funciones from './pages/Funciones';
+import DetalleFuncion from './pages/DetalleFuncion';
 
 const Router = () => {
     return (
@@ -14,6 +15,7 @@ const Router = () => {
                 <BaseRoute exact path="/" component={Home} />
                 <BaseRoute exact path="/proximamente" component={Proximamente} />
                 <BaseRoute exact path="/funciones" component={Funciones} />
+                <BaseRoute exact path="/funcion/:id" component={DetalleFuncion} />
             </Switch>
         </HashRouter>
     )
