@@ -22,6 +22,11 @@
     color: $negro;
 }
 
+.btn-danger{
+    background-color: $danger;
+    color: $blanco;
+}
+
 .btn-primary:focus,
 .btn-primary:hover{
     background-color: $alter1 !important;

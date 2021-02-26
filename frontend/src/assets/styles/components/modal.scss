@@ -1,0 +1,20 @@
+@import 'react-responsive-modal/styles.css';
+
+// CSS personalizado
+
+.react-responsive-modal-overlay {
+    background: rgba(9, 80, 122, 0.3);
+}
+
+.react-responsive-modal-modal {
+    background: #FFF;
+    border-radius: 0rem;
+    padding: 0 !important;
+}
+
+.modal-container {
+    width: 100%;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}

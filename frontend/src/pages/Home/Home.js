@@ -18,8 +18,8 @@ class Home extends Component {
                     className="portada"
                 >
                     <div className="">
-                        <h5 className="blanco">Ahora online</h5>
-                        <h1 className="blanco">¡Disfruta de las mejores peliculas!</h1>
+                        <h5 className="uppercase blanco">Ahora online</h5>
+                        <h1 className="uppercase blanco">¡Disfruta de las mejores peliculas!</h1>
                         <button className="btn btn-primary mt-4">Ver funciones</button>
                     </div>
                 </div>
