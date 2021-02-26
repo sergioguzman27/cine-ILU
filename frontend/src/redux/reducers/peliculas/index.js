@@ -7,6 +7,7 @@ const LOADER = 'PELICULAS_LOADER';
 const PROXIMAMENTE = 'PELICULAS_PROXIMAMENTE';
 const ESTRENOS = 'PELICULAS_ESTRENOS';
 const FUNCIONES = 'PELICULAS_FUNCIONES';
+const PAGE = 'PELICULAS_PAGE';
 
 // ------------------------------------
 // Pure Actions
@@ -19,7 +20,12 @@ export const setLoader = loader => ({
 const setData = (data, type=PROXIMAMENTE) => ({
     type,
     data,
-})
+});
+
+const setPage = (page) => ({
+    type: PAGE,
+    page,
+});
 
 
 // ------------------------------------
@@ -44,10 +50,21 @@ const getEstrenos = () => (dispatch) => {
     })
 };
 
+const getFunciones = (page = 1) => (dispatch) => {
+    dispatch(setLoader(true));
+    api.get('funciones', { page }).then(response => {
+        dispatch(setData(response, FUNCIONES));
+        dispatch(setPage(page));
+    }).finally(() => {
+        dispatch(setLoader(false));
+    })
+};
+
 
 export const actions = {
     getProximamente,
     getEstrenos,
+    getFunciones,
 };
 
 export const reducers = {
@@ -75,6 +92,12 @@ export const reducers = {
             funciones: data,
         };
     },
+    [PAGE]: (state, { page }) => {
+        return {
+            ...state,
+            page,
+        };
+    },
 };
 
 export const initialState = {
@@ -85,6 +108,7 @@ export const initialState = {
         count: 0,
         results: []
     },
+    page: 1,
 };
 
 export default handleActions(reducers, initialState);

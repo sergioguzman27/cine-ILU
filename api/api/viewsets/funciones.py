@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, filters, viewsets
 from rest_framework.decorators import action
@@ -21,6 +22,12 @@ class FuncionesViewset(viewsets.ModelViewSet):
         if self.action in ['retrieve']:
             return FuncionDetailSerializer
         return FuncionSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset;
+        queryset = queryset.filter(fecha_hora_inicio__gte=timezone.now())
+        return queryset
+
 
     def get_permissions(self):
         permission_classes = [AllowAny]

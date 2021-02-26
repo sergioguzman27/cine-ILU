@@ -65,8 +65,8 @@ class Proximamente extends Component {
                     className="portada-proximamente"
                 >
                     <div className="">
-                        <h5 className="uppercase blanco">Proximamente</h5>
-                        <h1 className="uppercase blanco">¡Proximamente podrás disfrutar <br/> de más peliculas!</h1>
+                        <h5 className="uppercase danger">Proximamente</h5>
+                        <h1 className="uppercase blanco">¡Las mejores peliculas!</h1>
                     </div>
                 </div>
                 <div className="proximamente">
