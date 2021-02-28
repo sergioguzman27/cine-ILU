@@ -43,7 +43,7 @@ const CompraForm = (props) => {
                     <img className="poster" src={`${TMDB_IMAGENES}${item.pelicula.poster_path}`} />
                 </div>
                 <div className="d-flex flex-column flex-3 px-3 mt-4 mt-md-0">
-                    <h5 className="uppercase danger">Pelicula</h5>
+                    <span className="uppercase danger">Pelicula</span>
                     <h4 className="blanco">{item.pelicula.title}</h4>
                     <div className="datos-pelicula">
                         <span className="text-small mr-3">
