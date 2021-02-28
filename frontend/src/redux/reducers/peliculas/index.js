@@ -11,6 +11,7 @@ const PAGE = 'PELICULAS_PAGE';
 const ITEM = 'PELICULAS_ITEM';
 const VIDEOS = 'PELICULAS_VIDEOS';
 const IMAGENES = 'PELICULAS_IMAGENES';
+const BUTACAS = 'PELICULAS_BUTACAS';
 
 // ------------------------------------
 // Pure Actions
@@ -63,13 +64,28 @@ const getFunciones = (page = 1) => (dispatch) => {
     })
 };
 
-const getFuncion = (id) => (dispatch) => {
+const getFuncion = (id, form=null) => (dispatch) => {
     dispatch(setLoader(true));
     api.get(`funciones/${id}`).then(response => {
         dispatch(setData(response, ITEM));
-        if (response.pelicula) {
+        if (response.pelicula && !form) {
             dispatch(getVideos(response.pelicula.id))
             dispatch(getImagenes(response.pelicula.id))
+        }
+        if (form) {
+            const { sala: { filas, asientos_fila, asientos }, butacas } = response;
+            const filas_butacas = [];
+            for (let i = 0; i < asientos; i += asientos_fila) {
+                const cols_butacas = [];
+                for (let j = i; j < i + asientos_fila; j += 1) {
+                    cols_butacas.push({...butacas[j], selected: false});
+                }
+                filas_butacas.push(cols_butacas);
+            }
+
+            console.log('array ', filas_butacas);
+            //setear
+            dispatch(setData(filas_butacas, BUTACAS))
         }
     }).finally(() => {
         dispatch(setLoader(false));
@@ -96,12 +112,35 @@ const getImagenes = (id) => (dispatch) => {
     })
 };
 
+const changeButaca = (fil, col) => (dispatch, getStore) => {
+    console.log("Se va seleccionar perros")
+    const { butacas } = getStore().peliculas;
+    const { values } = getStore().form.CompraForm;
+    const asientos = values ? values.cantidad ? values.cantidad : 0 : 0;
+    let seleccionados = 0;
+    butacas.forEach(item => {
+        item.forEach(_item => {
+            if (_item.selected)
+                seleccionados += 1
+        })
+    });
+    if (seleccionados < asientos && !butacas[fil][col].selected) {
+        // Podemos marcarlo
+        butacas[fil][col].selected = true;
+        console.log("butacas" , butacas)
+    } else {
+        butacas[fil][col].selected = false;
+    }
+    dispatch(setData(butacas, BUTACAS));
+}
+
 
 export const actions = {
     getProximamente,
     getEstrenos,
     getFunciones,
     getFuncion,
+    changeButaca,
 };
 
 export const reducers = {
@@ -153,6 +192,12 @@ export const reducers = {
             imagenes: data,
         };
     },
+    [BUTACAS]: (state, { data }) => {
+        return {
+            ...state,
+            butacas: data,
+        };
+    },
 };
 
 export const initialState = {
@@ -166,7 +211,8 @@ export const initialState = {
     page: 1,
     item: {},
     videos: [],
-    imagenes: []
+    imagenes: [],
+    butacas: []
 };
 
 export default handleActions(reducers, initialState);

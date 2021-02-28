@@ -44,7 +44,7 @@ class DetalleFuncion extends Component {
                             <div className="">
                                 {/* <h5 className="uppercase danger">Ahora online</h5> */}
                                 <h1 className="uppercase blanco px-5">{item.pelicula.title}</h1>
-                                <Link className="btn btn-primary mt-4 ml-5" to={`/funciones`}>Comprar tickets</Link>
+                                <Link className="btn btn-primary mt-4 ml-5" to={`/comprar/${item.id}`}>Comprar tickets</Link>
                             </div>
                         </div>
                         <div className="funcion-contenido">
@@ -56,7 +56,7 @@ class DetalleFuncion extends Component {
                                     </span>
                                     <span className="text-small mt-1">
                                         <CalendarFilled className="mr-3" />
-                                        {moment(item.fecha_hora_inicio).format("DD-MM-YYYY")}
+                                        {moment(item.fecha_hora_inicio).format("DD-MM-YYYY HH:mm")}
                                     </span>
                                     <span className="text-small mt-1">
                                         <CustomerServiceFilled className="mr-3" />
@@ -76,7 +76,7 @@ class DetalleFuncion extends Component {
                                 <h4 className="bold primary">Videos y trailers</h4>
                             </div>
                             <div className="d-flex flex-row flex-1 px-3 px-md-5 mt-5">
-                                <div className="d-flex justify-content-center row m-0 p-0">
+                                <div className="d-flex justify-content-center flex-1 row m-0 p-0">
                                     {videos.map((_item, index) => (
                                         <div key={index} className='col-12 col-md-2 col-lg-4'>
                                             <iframe

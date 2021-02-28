@@ -1,0 +1,106 @@
+.sala-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sala {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 0.4rem;
+    background-color: #f1f1f1;
+    padding: 0.5rem 1rem;
+
+    .fila {
+        display: flex;
+        width: 100%;
+        margin: 0.2rem 0;
+        justify-content: center;
+    }
+
+    .columna {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-bottom: 0.5rem;
+        margin-right: 1rem;
+    }
+
+    .guia {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .butaca-guia {
+        width:  2rem;
+        height: 2rem;
+        background-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .butaca {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0.4rem;
+        border: 2px solid transparent;
+        border-radius: 0.4rem;
+        cursor: pointer;
+
+        .butaca-icono {
+            width:  2rem;
+            height: 2rem;
+            background-color: transparent;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+
+    .butaca:hover, .butaca.selected {
+        border-color: $primary;
+    }
+    
+    .butaca.disabled {
+        cursor: default;
+        border-color: transparent;
+    }
+    
+    .pantalla {
+        margin-top: 2rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // height: 1.5rem;
+        background-color: #394867;
+        text-align: center;
+        color: white;
+        font-size: 15pt;
+    }
+}
+
+@media (max-width: 992px) {
+    .sala-container {
+        min-width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+
+    .sala {
+        min-width: 800px !important;
+        width: auto !important;
+        padding: 1.5rem;
+
+    }
+}
