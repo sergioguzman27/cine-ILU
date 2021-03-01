@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { push } from "react-router-redux";
 import { initialize as initializeForm } from 'redux-form';
+import Swal from 'sweetalert2';
 import { api } from '../../../utils/api';
 
 const LOADER = 'PELICULAS_LOADER';
@@ -112,6 +113,26 @@ const getImagenes = (id) => (dispatch) => {
     })
 };
 
+const comprarBoletos = (data) => (dispatch) => {
+    dispatch(setLoader(true));
+    api.post('compras', data).then(response => {
+        Swal.fire(
+            'Excelente!',
+            'Has realizado tu compra! Disfruta tu función',
+            'success'
+        )
+    }).catch(error => {
+        console.log("error ", error)
+        Swal.fire(
+            'Error!',
+            'Error al comprar tus boletos, intentalo más tarde',
+            'error'
+        )
+    }).finally(() => {
+        dispatch(setLoader(false));
+    })
+}
+
 const changeButaca = (fil, col) => (dispatch, getStore) => {
     console.log("Se va seleccionar perros")
     const { butacas } = getStore().peliculas;
@@ -141,6 +162,7 @@ export const actions = {
     getFunciones,
     getFuncion,
     changeButaca,
+    comprarBoletos,
 };
 
 export const reducers = {

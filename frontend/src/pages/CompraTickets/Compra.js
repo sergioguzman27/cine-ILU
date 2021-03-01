@@ -15,12 +15,15 @@ class CompraTickets extends Component {
 
     onSubmit = (values) => {
         const data = {...values};
+        const boletos = [];
         const { butacas } = this.props;
         let seleccionados = 0;
         butacas.forEach(item => {
             item.forEach(_item => {
-                if (_item.selected)
-                    seleccionados += 1
+                if (_item.selected) {
+                    boletos.push({butaca: _item.id});
+                    seleccionados += 1;
+                }
             })
         });
         if (seleccionados < data.cantidad) {
@@ -30,11 +33,9 @@ class CompraTickets extends Component {
                 'error'
             )
         } else {
-            Swal.fire(
-                'Excelente!',
-                'Has realizado tu compra! Disfruta tu función',
-                'success'
-            )
+            data.funcion = this.props.match.params.id;
+            data.boletos = boletos;
+            this.props.comprarBoletos(data);
         }
     }
 

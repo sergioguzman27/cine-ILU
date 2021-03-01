@@ -6,10 +6,10 @@ HOST = ''
  * Obtener el token si es que hay uno
  */
 const getToken = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        return `Token ${token}`;
-    }
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //     return `Token ${token}`;
+    // }
     return false;
 }
 
@@ -44,10 +44,10 @@ export const makeUrl = (endpoint, params = {}) => {
  * @param response: response: response de la peticion
  * */
 const errorHandler = (response) => {
-    if (response.statusCode === 401 || response.statusCode === 403) {
-        localStorage.removeItem('token');
-        window.location.assign('/#/login');
-    }
+    // if (response.statusCode === 401 || response.statusCode === 403) {
+    //     localStorage.removeItem('token');
+    //     window.location.assign('/#/login');
+    // }
 }
 
 
