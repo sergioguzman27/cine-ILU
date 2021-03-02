@@ -62,16 +62,16 @@ module.exports = {
     hot: true,
     open: true,
     port: 8080,
-    proxy: {
-      '/api': {
-        target: {
-          host: "localhost",
-          protocol: 'http:',
-          port: 8000
-        },
-        changeOrigin: true,
-        secure: false
-      }
-    }
+    proxy: [{
+      path: '/api',
+      target: 'http://localhost:8000/',
+      secure: false,
+      changeOrigin: true,
+    }, {
+      path: '/media',
+      target: 'http://localhost:8000/',
+      secure: false,
+      changeOrigin: true,
+    }]
   }
 };

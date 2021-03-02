@@ -113,14 +113,27 @@ const getImagenes = (id) => (dispatch) => {
     })
 };
 
-const comprarBoletos = (data) => (dispatch) => {
+const comprarBoletos = (data, close=null) => (dispatch) => {
     dispatch(setLoader(true));
     api.post('compras', data).then(response => {
-        Swal.fire(
-            'Excelente!',
-            'Has realizado tu compra! Disfruta tu función',
-            'success'
-        )
+        console.log("response ", response);
+        window.open(response.tickets, '_blank')
+        Swal.fire({
+            title: 'Compra realizada con exito',
+            text: 'Si no ves la descarga de tus boletos, da click en el botón de descargar.',
+            type: 'success',
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonText: 'Descargar',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                window.open(response.tickets, '_blank');
+            }
+            close()
+        });
+        // openModal(response)
     }).catch(error => {
         console.log("error ", error)
         Swal.fire(

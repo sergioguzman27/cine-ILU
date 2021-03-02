@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { TMDB_IMAGENES } from '../../utils/constants';
@@ -96,7 +97,7 @@ const CompraForm = (props) => {
             </div>
 
             <div className="btn-box-left flex-column flex-md-row mt-5 px-4">
-                <button className="flex-1 btn btn-secondary mr-md-5" type="button">Cancelar</button>
+                <Link to="/funciones" className="flex-1 btn btn-secondary mr-md-5" type="button">Cancelar</Link>
                 <button className="flex-1 btn btn-primary mt-3 mt-md-0" type="submit">Adquirir</button>
                 <div className="d-none d-md-flex flex-4"></div>
             </div>
