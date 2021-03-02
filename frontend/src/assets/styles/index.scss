@@ -9,6 +9,8 @@
 @import './components/footer.scss';
 @import './components/cards.scss';
 @import './components/modal.scss';
+@import './components/inputs.scss';
+@import './components/sala.scss';
 
 @import url(http://fonts.googleapis.com/css?family=Poppins);
 
@@ -73,4 +75,11 @@ label, .label {
 
 .w-100 {
   width: 100%;
+}
+
+/* Iconos swal */
+.swal2-icon {
+  span {
+      font-size: 16px !important;
+  }
 }

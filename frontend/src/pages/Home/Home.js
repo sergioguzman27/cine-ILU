@@ -15,7 +15,7 @@ class Home extends Component {
         return (
             <div className="w-100">
                 <div
-                    style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.5) 0%,#000000 100%), url(${background})`}}
+                    style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.3) 0%,#000000 100%), url(${background})`}}
                     className="portada"
                 >
                     <div className="">

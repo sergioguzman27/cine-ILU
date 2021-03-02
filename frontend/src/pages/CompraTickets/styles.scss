@@ -1,0 +1,32 @@
+.portada-compra {
+  width: 100%;
+  height: 35rem;
+
+  // background-color: #000;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.datos-pelicula {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.poster {
+  width: 60%;
+}
+
+@media (max-width: 992px) {
+  .datos-pelicula {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1rem 0;
+  }
+}

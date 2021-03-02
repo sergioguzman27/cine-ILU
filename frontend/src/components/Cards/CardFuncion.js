@@ -28,7 +28,9 @@ const CardFuncion = (props) => {
                 </div>
                 <div className='pelicula-datos'>
                     <span>{sala}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-                    <RenderCurrency value={precio} className="text-small" />
+                    <span>
+                        <RenderCurrency value={precio} className="text-small" />
+                    </span>
                 </div>
             </div>
             <div className='flex-1 mb-3'>

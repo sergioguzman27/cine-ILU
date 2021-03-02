@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import coverImg from '../../assets/static/proximamente.jpg';
 import CardFuncion from '../../components/Cards/CardFuncion';
 import { Pagination } from 'antd';
+import coverImg from '../../assets/static/funciones.jpg';
 import './styles.scss';
 
 class Funciones extends Component {
@@ -16,7 +16,7 @@ class Funciones extends Component {
         return (
             <div className="w-100">
                 <div
-                    style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.5) 0%,#000000 100%), url(${coverImg})`}}
+                    style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.1) 0%,#000000 100%), url(${coverImg})`}}
                     className="portada-funciones"
                 >
                     <div className="">

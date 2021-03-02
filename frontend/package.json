@@ -57,6 +57,7 @@
     "redux-thunk": "^2.2.0",
     "rsuite-table": "^3.14.3",
     "superagent": "^6.1.0",
+    "sweetalert2": "^10.15.5",
     "validate-redux-form": "^0.2.0"
   }
 }
