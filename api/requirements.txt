@@ -10,6 +10,7 @@ django-render-block==0.6
 django-sendgrid-v5==0.8.1
 django-six==1.0.4
 django-templated-email==2.3.0
+django-wkhtmltopdf==3.2.0
 djangorestframework==3.11.0
 mysqlclient==1.4.6
 requests==2.22.0

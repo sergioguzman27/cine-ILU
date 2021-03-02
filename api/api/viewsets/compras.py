@@ -9,6 +9,7 @@ from rest_framework.settings import api_settings
 
 from api.models import Compra, Butaca, Boleto, Funcion
 from api.serializers import CompraSerializer
+from api.utils.generar_boletos import pdf_boletos
 
 
 class ComprasViewset(viewsets.ModelViewSet):
@@ -64,6 +65,9 @@ class ComprasViewset(viewsets.ModelViewSet):
 
                 butaca.estado = Butaca.NO_DISPONIBLE
                 butaca.save()
+
+            # Generamos los boletos en fisico
+            pdf = pdf_boletos(compra)
             
             serializer = CompraSerializer(compra)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -71,5 +75,8 @@ class ComprasViewset(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    # @action(methods=["get"], detail=False)
-    # def proximamente(self, request, *args, **kwargs):
+    @action(methods=["post"], detail=False)
+    def boletos(self, request, *args, **kwargs):
+        compra = Compra.objects.get(id=5)
+        pdf = pdf_boletos(compra)
+        return Response({}, status=status.HTTP_200_OK)

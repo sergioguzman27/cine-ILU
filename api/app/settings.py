@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# TODO: se debe de instalar el paquete en el servidor
+# TODO: sudo apt-get install wkhtmltopdf
+# TODO: la ruta que se coloca en WKHTMLTOPDF_CMD es igual al valor de este comando  9
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+
 
 # Application definition
 
@@ -44,6 +49,7 @@ INSTALLED_APPS = [
     'api',
     # 'django.contrib.sites',
     'debug_toolbar',
+    'wkhtmltopdf',
 ]
 
 MIDDLEWARE = [
