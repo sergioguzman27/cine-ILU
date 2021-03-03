@@ -34,5 +34,5 @@ class FuncionAdmin(admin.ModelAdmin):
 
 @admin.register(Comida)
 class ComidaAdmin(admin.ModelAdmin):
-    fields = ('nombre', 'descripcion', 'imagen', 'precio')
+    fields = ('nombre', 'descripcion', 'imagen', 'precio,', 'activo')
     list_display = ('id', 'nombre', 'imagen', 'precio', 'activo')
