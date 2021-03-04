@@ -1,6 +1,9 @@
+import json
+import requests
 from io import StringIO, BytesIO
 from wkhtmltopdf.views import PDFTemplateResponse
 
+from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -43,7 +46,19 @@ def generar_boletos(compra):
 
     print('boletos ', boletos)
     
+    url = settings.TMBD_HOST + f'/movie/{compra.funcion.pelicula_id}'
+    pelicula = ''
+    try:
+        response = requests.get(url, params={'api_key': settings.TMDB_API_KEY})
+        response_body = json.loads(response.text)
+        pelicula = response_body.get('title', '')
+    except Exception as ex:
+        pelicula = ''
+
     context = {
+        'pelicula': pelicula,
+        'sala': compra.funcion.sala.nombre,
+        'fecha': compra.funcion.fecha_hora_inicio.strftime('%d/%m/%Y, %H:%M'),
         'boletos': boletos
     }
     

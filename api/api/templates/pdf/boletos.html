@@ -21,6 +21,7 @@
             color: #000;
         }
         h1 { color: #4f81c7; }
+        h4, h3 {margin-top: 10px; margin-bottom: 10px;}
         table { width: 100%;}
         td {
             width: 25%;
@@ -64,12 +65,21 @@
                                 <span style="color: #4f81c7; font-weight: bold; font-size: 20px;">Chejo Cine</span>
                             </div>
                             <div style="text-align: center;" class="flex">
-                                <h2>FILA</h2>
-                                <h2 style="margin-left: 10px; color: #4f81c7;">{{ col.fila }}</h2>
+                                <h4 style="color: #4f81c7;">{{ pelicula }}</h4>
                             </div>
                             <div style="text-align: center;" class="flex">
-                                <h2>ASIENTO</h2>
-                                <h2 style="margin-left: 10px; color: #4f81c7;">{{col.asiento}}</h2>
+                                <h4 style="color: #4f81c7;">{{ sala }}</h4>
+                            </div>
+                            <div style="text-align: center;" class="flex">
+                                <h4 style="color: #4f81c7;">{{ fecha }}</h4>
+                            </div>
+                            <div style="text-align: center;" class="flex">
+                                <h3>FILA</h3>
+                                <h3 style="margin-left: 10px; color: #4f81c7;">{{ col.fila }}</h3>
+                            </div>
+                            <div style="text-align: center;" class="flex">
+                                <h3>ASIENTO</h3>
+                                <h3 style="margin-left: 10px; color: #4f81c7;">{{col.asiento}}</h3>
                             </div>
                         </td>
                         {% else %}
