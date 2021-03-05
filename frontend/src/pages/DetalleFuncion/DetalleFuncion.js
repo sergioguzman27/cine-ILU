@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { TMDB_IMAGENES } from '../../utils/constants';
 import { RenderCurrency } from '../../components/Fields/ReadFields';
-import { ClockCircleFilled, CalendarFilled, WalletFilled, CustomerServiceFilled } from '@ant-design/icons';
+import { ClockCircleFilled, CalendarFilled, WalletFilled, CustomerServiceFilled, HourglassOutlined } from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import moment from 'moment';
@@ -51,12 +51,16 @@ class DetalleFuncion extends Component {
                             <div className="d-flex flex-column flex-md-row flex-1 px-3 px-md-5">
                                 <div className="d-flex justify-content-center flex-column flex-2">
                                     <span className="text-small">
-                                        <ClockCircleFilled className="mr-3" />
+                                        <HourglassOutlined className="mr-3"  />
                                         {this.getDuracion(item.fecha_hora_inicio, item.fecha_hora_fin)}
                                     </span>
                                     <span className="text-small mt-1">
                                         <CalendarFilled className="mr-3" />
-                                        {moment(item.fecha_hora_inicio).format("DD-MM-YYYY HH:mm")}
+                                        {moment(item.fecha_hora_inicio).format("DD-MM-YYYY")}
+                                    </span>
+                                    <span className="text-small">
+                                        <ClockCircleFilled className="mr-3" />
+                                        {moment(item.fecha_hora_inicio).format("hh:mm a")}
                                     </span>
                                     <span className="text-small mt-1">
                                         <CustomerServiceFilled className="mr-3" />

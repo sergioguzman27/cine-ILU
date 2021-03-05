@@ -22,10 +22,10 @@ def pdf_boletos(compra):
 def generar_boletos(compra):
     template = 'pdf/boletos.html'
 
-    index = 0;
     fils = -1
     cols = 0
     boletos = []
+    dulceria = []
     for item in compra.boletos.all():
         if cols == 4:
             cols= 0
@@ -38,6 +38,25 @@ def generar_boletos(compra):
         cols += 1
 
     for item in boletos:
+        cols = len(item)
+        if cols < 4:
+            for i in range(0, 4-cols):
+                item.append(None)
+
+    fils = -1
+    cols = 0
+    for item in compra.boletos_comida.all():
+        if cols == 4:
+            cols= 0
+        if cols == 0:
+            dulceria.append([])
+            fils += 1
+        array = dulceria[fils]
+        array.append({'codigo': item.id, 'nombre': item.comida.nombre, 'cantidad': item.cantidad})
+        dulceria[fils] = array
+        cols += 1
+
+    for item in dulceria:
         cols = len(item)
         if cols < 4:
             for i in range(0, 4-cols):
@@ -59,7 +78,8 @@ def generar_boletos(compra):
         'pelicula': pelicula,
         'sala': compra.funcion.sala.nombre,
         'fecha': compra.funcion.fecha_hora_inicio.strftime('%d/%m/%Y, %H:%M'),
-        'boletos': boletos
+        'boletos': boletos,
+        'dulceria': dulceria,
     }
     
     cmd_options = {

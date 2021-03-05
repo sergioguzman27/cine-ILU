@@ -17,3 +17,5 @@ class BoletoComida(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+
+    cantidad = models.IntegerField(default=0)

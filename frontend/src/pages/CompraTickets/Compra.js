@@ -52,6 +52,8 @@ class CompraTickets extends Component {
         } else {
             data.funcion = this.props.match.params.id;
             data.boletos = boletos;
+            if (data.dulceria)
+                data.dulceria = data.dulceria.map(item => ({ comida: item.id, cantidad: item.cantidad }))
             this.props.comprarBoletos(data, this.closeModal);
         }
     }
