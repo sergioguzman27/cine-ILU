@@ -33,10 +33,27 @@ class FuncionesViewset(viewsets.ModelViewSet):
         permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
 
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)
+    def list(self, request, *args, **kwargs):
+        fecha_inicio = request.GET.get('fecha_inicio', None)
+        fecha_fin = request.GET.get('fecha_fin', None)
+        precio_min = request.GET.get('precio_min', None)
+        precio_max = request.GET.get('precio_max', None)
 
-    # @action(methods=["get"], detail=False)
-    # def proximamente(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if fecha_inicio is not None:
+            queryset = queryset.filter(fecha_hora_inicio__gte=fecha_inicio)
+        if fecha_fin is not None:
+            queryset = queryset.filter(fecha_hora_fin__lte=fecha_fin)
+        if precio_min is not None:
+            queryset = queryset.filter(precio__gte=precio_min)
+        if precio_max is not None:
+            queryset = queryset.filter(precio__lte=precio_max)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

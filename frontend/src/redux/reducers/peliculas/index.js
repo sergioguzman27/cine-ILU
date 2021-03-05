@@ -4,6 +4,7 @@ import { initialize as initializeForm, change } from 'redux-form';
 import { api } from '../../../utils/api';
 import _ from 'lodash';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 const LOADER = 'PELICULAS_LOADER';
 const PROXIMAMENTE = 'PELICULAS_PROXIMAMENTE';
@@ -15,6 +16,9 @@ const VIDEOS = 'PELICULAS_VIDEOS';
 const IMAGENES = 'PELICULAS_IMAGENES';
 const BUTACAS = 'PELICULAS_BUTACAS';
 const COMIDA = 'PELICULAS_COMIDA';
+const FILTRO_FECHA = 'PELICULAS_FILTRO_FECHA';
+const FILTRO_PRECIO_MIN = 'PELICULAS_FILTRO_PRECIO_MIN';
+const FILTRO_PRECIO_MAX = 'PELICULAS_FILTRO_PRECIO_MAX';
 
 // ------------------------------------
 // Pure Actions
@@ -57,9 +61,19 @@ const getEstrenos = () => (dispatch) => {
     })
 };
 
-const getFunciones = (page = 1) => (dispatch) => {
+const getFunciones = (page = 1) => (dispatch, getStore) => {
+    const state = getStore().peliculas;
     dispatch(setLoader(true));
-    api.get('funciones', { page }).then(response => {
+    const params = { page };
+    if (state.fecha) {
+        params.fecha_inicio = moment(state.fecha).startOf('d').format()
+        params.fecha_fin = moment(state.fecha).endOf('d').format()
+    }
+    if (state.precio_min)
+        params.precio_min = state.precio_min
+    if (state.precio_max)
+        params.precio_max = state.precio_max
+    api.get('funciones', params).then(response => {
         dispatch(setData(response, FUNCIONES));
         dispatch(setPage(page));
     }).finally(() => {
@@ -209,6 +223,17 @@ const resetCarritoForm = () => (dispatch) => {
     dispatch(change('ComidaForm', 'cantidad', 0));
 }
 
+const changeFecha = (value) => (dispatch) => {
+    dispatch(setData(value, FILTRO_FECHA));
+    dispatch(getFunciones());
+}
+
+const changeRango = (value) => (dispatch) => {
+    dispatch(setData(value[0], FILTRO_PRECIO_MIN));
+    dispatch(setData(value[1], FILTRO_PRECIO_MAX));
+    // dispatch(getFunciones());
+}
+
 
 export const actions = {
     getProximamente,
@@ -221,6 +246,8 @@ export const actions = {
     agregarCarrito,
     eliminarCarrito,
     resetCarritoForm,
+    changeFecha,
+    changeRango,
 };
 
 export const reducers = {
@@ -284,6 +311,24 @@ export const reducers = {
             comida: data,
         };
     },
+    [FILTRO_FECHA]: (state, { data }) => {
+        return {
+            ...state,
+            fecha: data,
+        };
+    },
+    [FILTRO_PRECIO_MIN]: (state, { data }) => {
+        return {
+            ...state,
+            precio_min: data,
+        };
+    },
+    [FILTRO_PRECIO_MAX]: (state, { data }) => {
+        return {
+            ...state,
+            precio_max: data,
+        };
+    },
 };
 
 export const initialState = {
@@ -300,6 +345,9 @@ export const initialState = {
     imagenes: [],
     butacas: [],
     comida: [],
+    fecha: null,
+    precio_min: 0,
+    precio_max: 100
 };
 
 export default handleActions(reducers, initialState);
