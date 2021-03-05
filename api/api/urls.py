@@ -6,6 +6,7 @@ from api import viewsets
 
 
 router = DefaultRouter()
+router.register(r'comidas', viewsets.ComidaViewset)
 router.register(r'compras', viewsets.ComprasViewset)
 router.register(r'funciones', viewsets.FuncionesViewset)
 router.register(r'peliculas', viewsets.PeliculasViewSet, basename='peliculas')

@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
-from api.models import Compra, Butaca, Boleto, Funcion
+from api.models import Compra, Butaca, Boleto, Funcion, Comida, BoletoComida
 from api.serializers import CompraSerializer
 from api.utils.generar_boletos import pdf_boletos
 
@@ -34,9 +34,14 @@ class ComprasViewset(viewsets.ModelViewSet):
         with transaction.atomic():
             funcion = Funcion.objects.get(id=data.get('funcion', 0))
             boletos = data.get('boletos', [])
-            monto = funcion.precio * data.get('cantidad', 0)
+            dulceria = data.get('dulceria', [])
+            monto_boletos = funcion.precio * data.get('cantidad', 0)
+            monto_comida = data.get('monto_comida', 0)
 
             # Validamos la disponibilidad de los tickets
+            if len(boletos) == 0:
+                return Response({'detail': 'Compra al menos un boleto'}, status=status.HTTP_400_BAD_REQUEST)
+            
             disponibilidad = True
             for item in boletos:
                 butaca = Butaca.objects.get(id=item['butaca'])
@@ -52,7 +57,9 @@ class ComprasViewset(viewsets.ModelViewSet):
             compra = Compra.objects.create(
                 funcion=funcion,
                 boletos_comprados=data.get('cantidad', 0),
-                monto=monto
+                monto_boletos=monto_boletos,
+                monto_comida=monto_comida,
+                monto=monto_boletos+monto_comida
             )
 
             # Creamos los tickets y reservamos los asientos
@@ -66,7 +73,16 @@ class ComprasViewset(viewsets.ModelViewSet):
                 butaca.estado = Butaca.NO_DISPONIBLE
                 butaca.save()
 
-            # Generamos los boletos en fisico
+            # Creamos tickets para dulceria
+            for item in dulceria:
+                comida = Comida.objects.get(id=item['comida'])
+                BoletoComida.objects.create(
+                    compra=compra,
+                    comida=comida,
+                    cantidad=item['cantidad']
+                )
+
+            # Generamos los boletos (funcion y comida) en fisico
             pdf = pdf_boletos(compra)
             
             serializer = CompraSerializer(compra)

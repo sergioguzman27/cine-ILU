@@ -1,6 +1,9 @@
+import json
+import requests
 from io import StringIO, BytesIO
 from wkhtmltopdf.views import PDFTemplateResponse
 
+from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -19,10 +22,10 @@ def pdf_boletos(compra):
 def generar_boletos(compra):
     template = 'pdf/boletos.html'
 
-    index = 0;
     fils = -1
     cols = 0
     boletos = []
+    dulceria = []
     for item in compra.boletos.all():
         if cols == 4:
             cols= 0
@@ -40,11 +43,43 @@ def generar_boletos(compra):
             for i in range(0, 4-cols):
                 item.append(None)
 
+    fils = -1
+    cols = 0
+    for item in compra.boletos_comida.all():
+        if cols == 4:
+            cols= 0
+        if cols == 0:
+            dulceria.append([])
+            fils += 1
+        array = dulceria[fils]
+        array.append({'codigo': item.id, 'nombre': item.comida.nombre, 'cantidad': item.cantidad})
+        dulceria[fils] = array
+        cols += 1
+
+    for item in dulceria:
+        cols = len(item)
+        if cols < 4:
+            for i in range(0, 4-cols):
+                item.append(None)
+
 
     print('boletos ', boletos)
     
+    url = settings.TMBD_HOST + f'/movie/{compra.funcion.pelicula_id}'
+    pelicula = ''
+    try:
+        response = requests.get(url, params={'api_key': settings.TMDB_API_KEY})
+        response_body = json.loads(response.text)
+        pelicula = response_body.get('title', '')
+    except Exception as ex:
+        pelicula = ''
+
     context = {
-        'boletos': boletos
+        'pelicula': pelicula,
+        'sala': compra.funcion.sala.nombre,
+        'fecha': compra.funcion.fecha_hora_inicio.strftime('%d/%m/%Y, %H:%M'),
+        'boletos': boletos,
+        'dulceria': dulceria,
     }
     
     cmd_options = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TMDB_IMAGENES } from '../../utils/constants';
+import { ClockCircleFilled, CalendarFilled, WalletFilled, CustomerServiceFilled, HourglassOutlined } from '@ant-design/icons';
 import { RenderCurrency } from '../../components/Fields/ReadFields';
 import moment from 'moment';
 
@@ -23,11 +24,27 @@ const CardFuncion = (props) => {
             <div className="card-pelicula-info">
                 <span className="titulo blanco">{titulo}</span>
                 <div className='pelicula-datos'>
-                    <span>{moment(fecha_inicio).format("DD-MM-YYYY")}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-                    <span>{getDuracion()}</span>
+                    <div className="d-flex flex-1 align-items-center">
+                        <CalendarFilled className="mr-3" />
+                        <span>{moment(fecha_inicio).format("DD-MM-YYYY")}</span>
+                    </div>
+                    <div className="d-flex flex-1 align-items-center">
+                        <ClockCircleFilled className="mr-3" />
+                        <span>{moment(fecha_inicio).format("hh:mm a")}</span>
+                    </div>
                 </div>
                 <div className='pelicula-datos'>
-                    <span>{sala}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
+                    <div className="d-flex flex-1 align-items-center">
+                        <CustomerServiceFilled className="mr-3" />
+                        <span>{sala}</span>
+                    </div>
+                    <div className="d-flex flex-1 align-items-center">
+                        <HourglassOutlined className="mr-3"  />   
+                        <span>{getDuracion()}</span>
+                    </div>
+                </div>
+                <div className='pelicula-datos'>
+                    <WalletFilled className="mr-3" />
                     <span>
                         <RenderCurrency value={precio} className="text-small" />
                     </span>

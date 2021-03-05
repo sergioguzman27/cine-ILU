@@ -12,6 +12,8 @@ class Compra(models.Model):
     )
 
     boletos_comprados = models.IntegerField()
+    monto_boletos = models.FloatField(default=0)
+    monto_comida = models.FloatField(default=0)
     monto = models.FloatField()
 
     tickets = models.FileField(upload_to='boletos', null=True)

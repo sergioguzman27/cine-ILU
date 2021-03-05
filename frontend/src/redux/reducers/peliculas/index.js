@@ -1,8 +1,10 @@
 import { handleActions } from 'redux-actions';
 import { push } from "react-router-redux";
-import { initialize as initializeForm } from 'redux-form';
-import Swal from 'sweetalert2';
+import { initialize as initializeForm, change } from 'redux-form';
 import { api } from '../../../utils/api';
+import _ from 'lodash';
+import Swal from 'sweetalert2';
+import moment from 'moment';
 
 const LOADER = 'PELICULAS_LOADER';
 const PROXIMAMENTE = 'PELICULAS_PROXIMAMENTE';
@@ -13,6 +15,10 @@ const ITEM = 'PELICULAS_ITEM';
 const VIDEOS = 'PELICULAS_VIDEOS';
 const IMAGENES = 'PELICULAS_IMAGENES';
 const BUTACAS = 'PELICULAS_BUTACAS';
+const COMIDA = 'PELICULAS_COMIDA';
+const FILTRO_FECHA = 'PELICULAS_FILTRO_FECHA';
+const FILTRO_PRECIO_MIN = 'PELICULAS_FILTRO_PRECIO_MIN';
+const FILTRO_PRECIO_MAX = 'PELICULAS_FILTRO_PRECIO_MAX';
 
 // ------------------------------------
 // Pure Actions
@@ -55,9 +61,19 @@ const getEstrenos = () => (dispatch) => {
     })
 };
 
-const getFunciones = (page = 1) => (dispatch) => {
+const getFunciones = (page = 1) => (dispatch, getStore) => {
+    const state = getStore().peliculas;
     dispatch(setLoader(true));
-    api.get('funciones', { page }).then(response => {
+    const params = { page };
+    if (state.fecha) {
+        params.fecha_inicio = moment(state.fecha).startOf('d').format()
+        params.fecha_fin = moment(state.fecha).endOf('d').format()
+    }
+    if (state.precio_min)
+        params.precio_min = state.precio_min
+    if (state.precio_max)
+        params.precio_max = state.precio_max
+    api.get('funciones', params).then(response => {
         dispatch(setData(response, FUNCIONES));
         dispatch(setPage(page));
     }).finally(() => {
@@ -125,7 +141,7 @@ const comprarBoletos = (data, close=null) => (dispatch) => {
             icon: 'success',
             showCancelButton: true,
             confirmButtonText: 'Descargar',
-            cancelButtonText: 'Cancelar',
+            cancelButtonText: 'Cerrar',
             reverseButtons: true
         }).then((result) => {
             if (result.value) {
@@ -166,6 +182,56 @@ const changeButaca = (fil, col) => (dispatch, getStore) => {
         butacas[fil][col].selected = false;
     }
     dispatch(setData(butacas, BUTACAS));
+};
+
+const getComida = () => (dispatch) => {
+    dispatch(setLoader(true));
+    api.get('comidas').then(response => {
+        dispatch(setData(response, COMIDA));
+    }).finally(() => {
+        dispatch(setLoader(false));
+    })
+};
+
+const agregarCarrito = (item, cantidad) => (dispatch, getStore) => {
+    const form = getStore().form.CompraForm;
+    let dulceria = [];
+    if (form.values && form.values.dulceria)
+        dulceria = form.values.dulceria;
+    const index = _.findIndex(dulceria, { id: item.id });
+    if (index != -1) {
+        const item = dulceria[index];
+        dulceria[index] = {...item, cantidad: item.cantidad + cantidad}
+    }
+    else {
+        dulceria.push({...item, cantidad});
+    }
+    dispatch(change('CompraForm', 'dulceria', dulceria));
+}
+
+const eliminarCarrito = (index) => (dispatch, getStore) => {
+    const form = getStore().form.CompraForm;
+    let dulceria = [];
+    if (form.values && form.values.dulceria)
+        dulceria = form.values.dulceria;
+    
+    dulceria.splice(index, 1);
+    dispatch(change('CompraForm', 'dulceria', dulceria));
+}
+
+const resetCarritoForm = () => (dispatch) => {
+    dispatch(change('ComidaForm', 'cantidad', 0));
+}
+
+const changeFecha = (value) => (dispatch) => {
+    dispatch(setData(value, FILTRO_FECHA));
+    dispatch(getFunciones());
+}
+
+const changeRango = (value) => (dispatch) => {
+    dispatch(setData(value[0], FILTRO_PRECIO_MIN));
+    dispatch(setData(value[1], FILTRO_PRECIO_MAX));
+    // dispatch(getFunciones());
 }
 
 
@@ -176,6 +242,12 @@ export const actions = {
     getFuncion,
     changeButaca,
     comprarBoletos,
+    getComida,
+    agregarCarrito,
+    eliminarCarrito,
+    resetCarritoForm,
+    changeFecha,
+    changeRango,
 };
 
 export const reducers = {
@@ -233,6 +305,30 @@ export const reducers = {
             butacas: data,
         };
     },
+    [COMIDA]: (state, { data }) => {
+        return {
+            ...state,
+            comida: data,
+        };
+    },
+    [FILTRO_FECHA]: (state, { data }) => {
+        return {
+            ...state,
+            fecha: data,
+        };
+    },
+    [FILTRO_PRECIO_MIN]: (state, { data }) => {
+        return {
+            ...state,
+            precio_min: data,
+        };
+    },
+    [FILTRO_PRECIO_MAX]: (state, { data }) => {
+        return {
+            ...state,
+            precio_max: data,
+        };
+    },
 };
 
 export const initialState = {
@@ -247,7 +343,11 @@ export const initialState = {
     item: {},
     videos: [],
     imagenes: [],
-    butacas: []
+    butacas: [],
+    comida: [],
+    fecha: null,
+    precio_min: 0,
+    precio_max: 100
 };
 
 export default handleActions(reducers, initialState);

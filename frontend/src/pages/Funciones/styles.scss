@@ -1,3 +1,5 @@
+@import '../../assets/styles/colors.scss';
+
 .portada-funciones {
   width: 100%;
   height: 40rem;
@@ -18,11 +20,28 @@
   padding: 1rem 5rem;
 }
 
+.filtros {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 4rem 0;
+  padding: 2.5rem 20%;
+  border: 2px solid $danger;
+  border-radius: 0.4rem;
+}
+
 @media (max-width: 992px) {
   .portada-proximamente {
     padding: 0 1rem;
   }
   .proximamente {
     padding: 1rem 1rem !important;
+  }
+  .filtros {
+    // margin: 2rem 0;
+    flex-direction: column-reverse;
+    padding: 2.5rem 1rem;
+
   }
 }

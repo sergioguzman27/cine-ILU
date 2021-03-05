@@ -1,0 +1,49 @@
+@import '../colors.scss';
+
+.load-mask {
+    position: relative;
+}
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: $alter2, $alpha: 0.3);
+}
+
+.loader-icon {
+    font-size: 15rem;
+    color: $alter1;
+}
+
+.loader-texto {
+    font-size: 25pt !important;
+    font-weight: bold;
+    color: white;
+    animation: colorAnimation infinite linear 5s;
+}
+
+@keyframes colorAnimation {
+    0%{
+        color: $primary;
+    }
+    25%{
+        color: $secondary;
+    }
+    50%{
+        color: $alter1;
+    }
+    75%{
+        color: $danger;
+    }
+    100%{
+        color: $blanco;
+    }
+}
