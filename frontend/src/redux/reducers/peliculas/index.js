@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions';
 import { push } from "react-router-redux";
-import { initialize as initializeForm } from 'redux-form';
-import Swal from 'sweetalert2';
+import { initialize as initializeForm, change } from 'redux-form';
 import { api } from '../../../utils/api';
+import _ from 'lodash';
+import Swal from 'sweetalert2';
 
 const LOADER = 'PELICULAS_LOADER';
 const PROXIMAMENTE = 'PELICULAS_PROXIMAMENTE';
@@ -13,6 +14,7 @@ const ITEM = 'PELICULAS_ITEM';
 const VIDEOS = 'PELICULAS_VIDEOS';
 const IMAGENES = 'PELICULAS_IMAGENES';
 const BUTACAS = 'PELICULAS_BUTACAS';
+const COMIDA = 'PELICULAS_COMIDA';
 
 // ------------------------------------
 // Pure Actions
@@ -125,7 +127,7 @@ const comprarBoletos = (data, close=null) => (dispatch) => {
             icon: 'success',
             showCancelButton: true,
             confirmButtonText: 'Descargar',
-            cancelButtonText: 'Cancelar',
+            cancelButtonText: 'Cerrar',
             reverseButtons: true
         }).then((result) => {
             if (result.value) {
@@ -166,6 +168,45 @@ const changeButaca = (fil, col) => (dispatch, getStore) => {
         butacas[fil][col].selected = false;
     }
     dispatch(setData(butacas, BUTACAS));
+};
+
+const getComida = () => (dispatch) => {
+    dispatch(setLoader(true));
+    api.get('comidas').then(response => {
+        dispatch(setData(response, COMIDA));
+    }).finally(() => {
+        dispatch(setLoader(false));
+    })
+};
+
+const agregarCarrito = (item, cantidad) => (dispatch, getStore) => {
+    const form = getStore().form.CompraForm;
+    let dulceria = [];
+    if (form.values && form.values.dulceria)
+        dulceria = form.values.dulceria;
+    const index = _.findIndex(dulceria, { id: item.id });
+    if (index != -1) {
+        const item = dulceria[index];
+        dulceria[index] = {...item, cantidad: item.cantidad + cantidad}
+    }
+    else {
+        dulceria.push({...item, cantidad});
+    }
+    dispatch(change('CompraForm', 'dulceria', dulceria));
+}
+
+const eliminarCarrito = (index) => (dispatch, getStore) => {
+    const form = getStore().form.CompraForm;
+    let dulceria = [];
+    if (form.values && form.values.dulceria)
+        dulceria = form.values.dulceria;
+    
+    dulceria.splice(index, 1);
+    dispatch(change('CompraForm', 'dulceria', dulceria));
+}
+
+const resetCarritoForm = () => (dispatch) => {
+    dispatch(change('ComidaForm', 'cantidad', 0));
 }
 
 
@@ -176,6 +217,10 @@ export const actions = {
     getFuncion,
     changeButaca,
     comprarBoletos,
+    getComida,
+    agregarCarrito,
+    eliminarCarrito,
+    resetCarritoForm,
 };
 
 export const reducers = {
@@ -233,6 +278,12 @@ export const reducers = {
             butacas: data,
         };
     },
+    [COMIDA]: (state, { data }) => {
+        return {
+            ...state,
+            comida: data,
+        };
+    },
 };
 
 export const initialState = {
@@ -247,7 +298,8 @@ export const initialState = {
     item: {},
     videos: [],
     imagenes: [],
-    butacas: []
+    butacas: [],
+    comida: [],
 };
 
 export default handleActions(reducers, initialState);

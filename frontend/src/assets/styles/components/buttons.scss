@@ -37,6 +37,17 @@
     background-color: $alter1 !important;
 }
 
+.btn-clear {
+    background-color: transparent;
+    border: none;
+    font-size: 20pt;
+}
+.btn-clear:hover, .btn-clear:focus {
+    .fa-trash {
+        color: $danger !important;
+    }
+}
+
 // Contenedores
 .btn-box-left {
     display: flex;

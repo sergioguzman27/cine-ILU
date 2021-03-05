@@ -79,6 +79,17 @@
   }
 }
 
+.card-dulceria {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid $primary;
+  border-radius: 0.4rem;
+  // margin-left: 0.5rem;
+  // margin-r: 0.5rem;
+}
+
 @media (max-width: 992px) {
   .card-proximamente {
     flex-direction: column;

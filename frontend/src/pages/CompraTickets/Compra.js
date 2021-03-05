@@ -17,6 +17,7 @@ class CompraTickets extends Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         this.props.getFuncion(id, true);
+        this.props.getComida();
     }
 
     openModal = (response) => {

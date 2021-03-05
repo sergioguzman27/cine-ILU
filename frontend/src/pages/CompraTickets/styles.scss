@@ -1,3 +1,5 @@
+@import '../../assets/styles/colors.scss';
+
 .portada-compra {
   width: 100%;
   height: 35rem;
@@ -23,10 +25,30 @@
   width: 60%;
 }
 
+.compra-resumen {
+  width: 50%;
+}
+
+.datos-compra {
+  display: flex;
+  flex: 1;
+  border-bottom: 2px solid $alter1;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+
+  .text-totales {
+    font-size: 20pt;
+  }
+}
+
 @media (max-width: 992px) {
   .datos-pelicula {
     flex-direction: column;
     align-items: flex-start;
     margin: 1rem 0;
+  }
+  .compra-resumen {
+    width: 100%;
   }
 }

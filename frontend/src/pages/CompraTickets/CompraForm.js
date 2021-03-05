@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Empty, Button } from 'antd';
 import { connect } from 'react-redux';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
 import { TMDB_IMAGENES } from '../../utils/constants';
 import { ClockCircleFilled, CalendarFilled, CustomerServiceFilled } from '@ant-design/icons';
 import { NumberField } from '../../components/Fields/Inputs';
 import { RenderCurrency } from '../../components/Fields/ReadFields';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import CarritoDulceria from '../../components/Fields/CarritoDulceria';
 import Sala from '../../components/Fields/Sala';
+import ModalCarrito from './ModalCarrito';
 import moment from 'moment';
 
 
@@ -23,6 +28,8 @@ const validate = values => {
 
 const CompraForm = (props) => {
     const { item, handleSubmit, cantidad } = props;
+    const [modal, setModal] = useState(false);
+    const [comida, setComida] = useState(null);
 
     const getDuracion = (fecha_inicio, fecha_fin) => {
         const inicio = moment(fecha_inicio);
@@ -32,13 +39,54 @@ const CompraForm = (props) => {
         return `${fecha.format('h')}hr ${fecha.format('mm')}min`;
     }
 
-    const getTotal = () => {
+    const getTotalBoletos = () => {
         const precio = item.precio ? parseFloat(item.precio) : 0;
         return precio * (cantidad || 0)
     }
 
+    const getTotalDulceria = () => {
+        let total = 0;
+        if (props.dulceria) {
+            props.dulceria.forEach(item => {
+                total += item.precio * item.cantidad;
+            })
+        }
+        return total;
+    }
+    
+    const getTotal = () => {
+        const boletos = getTotalBoletos();
+        const dulceria = getTotalDulceria();
+        return boletos + dulceria;
+    }
+
+    const cerrarModal = () => {
+        props.resetCarritoForm();
+        setModal(false);
+        setComida(null);
+    }
+
+    const abrirModal = (_comida) => {
+        setComida(_comida);
+        setModal(true);
+    }
+
+    const agregarCarrito = (cantidad,) => {
+        if (cantidad) {
+            console.log("puttoooooo")
+            props.agregarCarrito(comida, cantidad);
+            cerrarModal();
+        }
+    }
+
     return (
         <form name="CompraForm" className="funcion-contenido" onSubmit={handleSubmit}>
+            <ModalCarrito
+                modal={modal}
+                item={comida}
+                cerrarModal={cerrarModal}
+                agregarCarrito={agregarCarrito}
+            />
             <div className="d-flex flex-md-row flex-column flex-1 w-100 mt-5">
                 <div className="d-flex justify-content-center flex-2 px-md-3">
                     <img className="poster" src={`${TMDB_IMAGENES}${item.pelicula.poster_path}`} />
@@ -85,7 +133,7 @@ const CompraForm = (props) => {
                         <div className="d-flex flex-column justify-content-between flex-1">
                             <span className='bold blanco'>TOTAL</span>
                             <h4 className="alter1">
-                                <RenderCurrency value={getTotal()} className="h4 alter1" />
+                                <RenderCurrency value={getTotalBoletos()} className="h4 alter1" />
                             </h4>
                         </div>
                     </div>
@@ -94,6 +142,69 @@ const CompraForm = (props) => {
             <div className="d-flex flex-column flex-1 w-100 mt-5 px-4">
                 <span className="bold alter1 mb-2">Ahora selecciona tus asientos</span>
                 <Sala butacas={props.butacas} changeButaca={props.changeButaca}  />
+            </div>
+
+            {/* COMIDA */}
+            <div className="d-flex flex-column flex-1 w-100 mt-5 px-4">
+                <span className="bold alter1 mb-2">Y de paso, ¿no quieres algo de la dulceria?</span>
+                <div className="d-flex flex-row flex-1 px-3 px-md-5 mt-5">
+                    <Carousel className="w-100 carousel-responsive" autoPlay={true} infiniteLoop interval={10000}>
+                        {props.comida.map((_item, index) => (
+                            <div className="d-flex flex-row flex-1 w-100" key={index}>
+                                <div className="d-flex align-items-center justify-content-center flex-1">
+                                    <img  style={{ width: '50%' }}  src={_item.imagen} />
+                                </div>
+                                <div className="d-flex flex-column align-items-center justify-content-center flex-1">
+                                    <h4 className="blanco">{_item.nombre}</h4>
+                                    <div className="d-flex my-4">
+                                        <h5 className='bold blanco'>Precio:</h5>
+                                        <h5 className="alter1 ml-4">
+                                            <RenderCurrency value={_item.precio} className="h5 alter1" />
+                                        </h5>
+                                    </div>
+                                    <p className="blanco">{_item.descripcion}</p>
+                                    <button className="btn btn-danger" onClick={() => abrirModal(_item)} type="button">Agregar</button>
+                                </div>
+                            </div>
+                        ))}
+                    </Carousel>
+                </div>
+            </div>
+            <div className="d-flex flex-column flex-1 w-100 mt-5 px-4">
+                <span className="bold alter1 mb-2">Carrito de dulceria</span>
+                {props.dulceria.length ? (
+                    <FieldArray
+                        name="dulceria"
+                        dulceria={props.dulceria}
+                        component={CarritoDulceria}
+                        eliminarCarrito={props.eliminarCarrito}
+                    />
+                ) : (
+                    <Empty
+                        description={<span className="blanco">Sin snaks agregados</span>}
+                    />
+                )}
+            </div>
+            <div className="compra-resumen d-flex flex-column flex-1 mt-5 px-4">
+                <span className="bold alter1 mb-2">Detalles de la compra</span>
+                <div className="datos-compra">
+                    <span className='text-totales bold blanco'>Total Boletos:</span>
+                    <span className="text-totales alter1">
+                        <RenderCurrency value={getTotalBoletos()} className="text-totales alter1" />
+                    </span>
+                </div>
+                <div className="datos-compra">
+                    <span className='text-totales bold blanco'>Total Dulcería:</span>
+                    <span className="text-totales alter1">
+                        <RenderCurrency value={getTotalDulceria()} className="text-totales alter1" />
+                    </span>
+                </div>
+                <div className="datos-compra">
+                    <span className='text-totales bold blanco'>Total Compra:</span>
+                    <span className="text-totales alter1">
+                        <RenderCurrency value={getTotal()} className="text-totales alter1" />
+                    </span>
+                </div>
             </div>
 
             <div className="btn-box-left flex-column flex-md-row mt-5 px-4">
@@ -110,13 +221,18 @@ const selector = formValueSelector('CompraForm');
 
 const mstp = state => {
     const cantidad = selector(state, 'cantidad');
+    const dulceria = selector(state, 'dulceria');
 
     return {
         cantidad,
+        dulceria,
     }
 };
 
 export default reduxForm({
     form: 'CompraForm',
+    initialValues: {
+        dulceria: []
+    },
     validate: validate,
 })( connect(mstp, null)(CompraForm));

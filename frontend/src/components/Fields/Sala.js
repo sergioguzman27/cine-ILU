@@ -23,6 +23,7 @@ const Sala = (props) => {
     return (
         <div className="sala-container">
             <div className='sala'>
+                
                 <div className="guia">
                     <div className="d-flex align-items-center mr-4">
                         <div
@@ -46,6 +47,10 @@ const Sala = (props) => {
                         <span className="ml-1">Seleccionado</span>
                     </div>
                 </div>
+                {/* Pantalla */}
+                <div className="pantalla">
+                    Pantalla
+                </div>
                 {butacas && butacas.map((item, fil) => (
                     <div key={fil} className="fila">
                         <div className="columna">
@@ -66,10 +71,7 @@ const Sala = (props) => {
                         ))}
                     </div>
                 ))}
-                {/* Pantalla */}
-                <div className="pantalla">
-                    Pantalla
-                </div>
+                
             </div>
 
         </div>
