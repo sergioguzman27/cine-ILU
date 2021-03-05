@@ -27,7 +27,7 @@ const ModalCarrito = (props) => {
         >
             <div className='d-flex flex-column justify-content-center align-items-center p-5'>
                 {item && (
-                    <div className="d-flex flex-row flex-1 w-100">
+                    <div className="d-flex flex-column flex-md-row flex-1 w-100">
                         <div className="d-flex align-items-center justify-content-center flex-2">
                             <img style={{ width: '80%' }} src={item.imagen} />
                         </div>

@@ -150,7 +150,7 @@ const CompraForm = (props) => {
                 <div className="d-flex flex-row flex-1 px-3 px-md-5 mt-5">
                     <Carousel className="w-100 carousel-responsive" autoPlay={true} infiniteLoop interval={10000}>
                         {props.comida.map((_item, index) => (
-                            <div className="d-flex flex-row flex-1 w-100" key={index}>
+                            <div className="d-flex flex-column flex-md-row flex-1 w-100" key={index}>
                                 <div className="d-flex align-items-center justify-content-center flex-1">
                                     <img  style={{ width: '50%' }}  src={_item.imagen} />
                                 </div>

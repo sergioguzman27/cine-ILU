@@ -22,7 +22,7 @@ class Funciones extends Component {
                         style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.1) 0%,#000000 100%), url(${coverImg})`}}
                         className="portada-funciones"
                     >
-                        <div className="">
+                        <div className="pl-2 pl-md-0">
                             <h5 className="uppercase danger">FUNCIONES</h5>
                             <h1 className="uppercase blanco">¡Nuestra CARTELERA!</h1>
                         </div>

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import LoadMask from '../../components/LoadMask';
 import coverImg from '../../assets/static/proximamente.jpg';
 import CardProx from '../../components/Cards/CardProx';
 import { Modal } from 'react-responsive-modal';
@@ -56,35 +57,37 @@ class Proximamente extends Component {
     )
 
     render() {
-        const { proximamente } = this.props;
+        const { loader, proximamente } = this.props;
         return (
             <div className="w-100">
-                {this.renderModal()}
-                <div
-                    style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.5) 0%,#000000 100%), url(${coverImg})`}}
-                    className="portada-proximamente"
-                >
-                    <div className="">
-                        <h5 className="uppercase danger">Proximamente</h5>
-                        <h1 className="uppercase blanco">¡Las mejores peliculas!</h1>
+                <LoadMask loading={loader}>
+                    {this.renderModal()}
+                    <div
+                        style={{backgroundImage: `linear-gradient(180deg,rgba(0,0,0,0.5) 0%,#000000 100%), url(${coverImg})`}}
+                        className="portada-proximamente"
+                    >
+                        <div className="">
+                            <h5 className="uppercase danger">Proximamente</h5>
+                            <h1 className="uppercase blanco">¡Las mejores peliculas!</h1>
+                        </div>
                     </div>
-                </div>
-                <div className="proximamente">
-                    <div className="row p-0 m-0">
-                        {proximamente.map((item, index) => (
-                            <div key={index} className="col-12 mb-5">
-                                <CardProx
-                                    id={item.id}
-                                    titulo={item.title}
-                                    poster={item.poster_path}
-                                    descripcion={item.overview}
-                                    fecha={item.release_date}
-                                    openVideo={this.openVideo}
-                                />
-                            </div>
-                        ))}  
+                    <div className="proximamente">
+                        <div className="row p-0 m-0">
+                            {proximamente.map((item, index) => (
+                                <div key={index} className="col-12 mb-5">
+                                    <CardProx
+                                        id={item.id}
+                                        titulo={item.title}
+                                        poster={item.poster_path}
+                                        descripcion={item.overview}
+                                        fecha={item.release_date}
+                                        openVideo={this.openVideo}
+                                    />
+                                </div>
+                            ))}  
+                        </div>
                     </div>
-                </div>
+                </LoadMask>
             </div>
         );
     }

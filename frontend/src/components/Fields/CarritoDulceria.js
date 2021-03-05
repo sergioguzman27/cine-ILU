@@ -26,7 +26,7 @@ const CarritoDulceria = ({fields, dulceria, eliminarCarrito}) => {
     return (
         <div className="d-flex justify-content-center row p-0 m-0 w-100">
             {fields.map((item, index) => (
-                <div key={index} className="card-dulceria col-md-4 col-6">
+                <div key={index} className="card-dulceria col-lg-4 col-md-6 col-12">
                     <button
                         type="button"
                         onClick={() => eliminar(index)}
