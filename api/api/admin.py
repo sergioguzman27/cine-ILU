@@ -1,5 +1,5 @@
 from django.contrib import admin
-from api.models import Sala, Funcion, Butaca, Comida
+from api.models import Sala, Funcion, Butaca, Comida, Butaca
 
 # Register your models here.
 @admin.register(Sala)
@@ -36,3 +36,8 @@ class FuncionAdmin(admin.ModelAdmin):
 class ComidaAdmin(admin.ModelAdmin):
     fields = ('nombre', 'descripcion', 'imagen', 'precio,', 'activo')
     list_display = ('id', 'nombre', 'imagen', 'precio', 'activo')
+
+@admin.register(Butaca)
+class ButacaAdmin(admin.ModelAdmin):
+    fields = ('estado',)
+    list_display = ('id', 'funcion_id', 'fila', 'numero_asiento', 'estado')

@@ -16,3 +16,6 @@ class Funcion(models.Model):
     fecha_hora_inicio = models.DateTimeField()
     fecha_hora_fin = models.DateTimeField()
     activa = models.BooleanField(default=True)
+
+    # def __str__(self):
+        # return self.pelicula_id

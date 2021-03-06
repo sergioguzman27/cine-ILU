@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Empty, Button } from 'antd';
 import { connect } from 'react-redux';
@@ -27,9 +27,11 @@ const validate = values => {
 
 
 const CompraForm = (props) => {
-    const { item, handleSubmit, cantidad } = props;
+    const { item, handleSubmit, cantidad, llevaDulceria } = props;
     const [modal, setModal] = useState(false);
     const [comida, setComida] = useState(null);
+
+    // llevaDulceria();
 
     const getDuracion = (fecha_inicio, fecha_fin) => {
         const inicio = moment(fecha_inicio);
@@ -78,6 +80,12 @@ const CompraForm = (props) => {
             cerrarModal();
         }
     }
+
+    // const llevaDulceria = () => {
+    //     const hoy = moment(item.fecha_hora_inicio);
+    //     console.log("hoy ", hoy.day())
+    //     return hoy.day() !== 6;
+    // }
 
     return (
         <form name="CompraForm" className="funcion-contenido" onSubmit={handleSubmit}>
@@ -145,46 +153,53 @@ const CompraForm = (props) => {
             </div>
 
             {/* COMIDA */}
-            <div className="d-flex flex-column flex-1 w-100 mt-5 px-4">
-                <span className="bold alter1 mb-2">Y de paso, ¿no quieres algo de la dulceria?</span>
-                <div className="d-flex flex-row flex-1 px-3 px-md-5 mt-5">
-                    <Carousel className="w-100 carousel-responsive" autoPlay={true} infiniteLoop interval={10000}>
-                        {props.comida.map((_item, index) => (
-                            <div className="d-flex flex-column flex-md-row flex-1 w-100" key={index}>
-                                <div className="d-flex align-items-center justify-content-center flex-1">
-                                    <img  style={{ width: '50%' }}  src={_item.imagen} />
-                                </div>
-                                <div className="d-flex flex-column align-items-center justify-content-center flex-1">
-                                    <h4 className="blanco">{_item.nombre}</h4>
-                                    <div className="d-flex my-4">
-                                        <h5 className='bold blanco'>Precio:</h5>
-                                        <h5 className="alter1 ml-4">
-                                            <RenderCurrency value={_item.precio} className="h5 alter1" />
-                                        </h5>
+
+
+            {llevaDulceria() && (
+
+                <Fragment>
+                    <div className="d-flex flex-column flex-1 w-100 mt-5 px-4">
+                        <span className="bold alter1 mb-2">Y de paso, ¿no quieres algo de la dulceria?</span>
+                        <div className="d-flex flex-row flex-1 px-3 px-md-5 mt-5">
+                            <Carousel className="w-100 carousel-responsive" autoPlay={true} infiniteLoop interval={10000}>
+                                {props.comida.map((_item, index) => (
+                                    <div className="d-flex flex-column flex-md-row flex-1 w-100" key={index}>
+                                        <div className="d-flex align-items-center justify-content-center flex-1">
+                                            <img  style={{ width: '50%' }}  src={_item.imagen} />
+                                        </div>
+                                        <div className="d-flex flex-column align-items-center justify-content-center flex-1">
+                                            <h4 className="blanco">{_item.nombre}</h4>
+                                            <div className="d-flex my-4">
+                                                <h5 className='bold blanco'>Precio:</h5>
+                                                <h5 className="alter1 ml-4">
+                                                    <RenderCurrency value={_item.precio} className="h5 alter1" />
+                                                </h5>
+                                            </div>
+                                            <p className="blanco">{_item.descripcion}</p>
+                                            <button className="btn btn-danger" onClick={() => abrirModal(_item)} type="button">Agregar</button>
+                                        </div>
                                     </div>
-                                    <p className="blanco">{_item.descripcion}</p>
-                                    <button className="btn btn-danger" onClick={() => abrirModal(_item)} type="button">Agregar</button>
-                                </div>
-                            </div>
-                        ))}
-                    </Carousel>
-                </div>
-            </div>
-            <div className="d-flex flex-column flex-1 w-100 mt-5 px-4">
-                <span className="bold alter1 mb-2">Carrito de dulceria</span>
-                {props.dulceria.length ? (
-                    <FieldArray
-                        name="dulceria"
-                        dulceria={props.dulceria}
-                        component={CarritoDulceria}
-                        eliminarCarrito={props.eliminarCarrito}
-                    />
-                ) : (
-                    <Empty
-                        description={<span className="blanco">Sin snaks agregados</span>}
-                    />
-                )}
-            </div>
+                                ))}
+                            </Carousel>
+                        </div>
+                    </div>
+                    <div className="d-flex flex-column flex-1 w-100 mt-5 px-4">
+                        <span className="bold alter1 mb-2">Carrito de dulceria</span>
+                        {props.dulceria.length ? (
+                            <FieldArray
+                                name="dulceria"
+                                dulceria={props.dulceria}
+                                component={CarritoDulceria}
+                                eliminarCarrito={props.eliminarCarrito}
+                            />
+                        ) : (
+                            <Empty
+                                description={<span className="blanco">Sin snaks agregados</span>}
+                            />
+                        )}
+                    </div>
+                </Fragment>
+            ) }
             <div className="compra-resumen d-flex flex-column flex-1 mt-5 px-4">
                 <span className="bold alter1 mb-2">Detalles de la compra</span>
                 <div className="datos-compra">
@@ -193,12 +208,14 @@ const CompraForm = (props) => {
                         <RenderCurrency value={getTotalBoletos()} className="text-totales alter1" />
                     </span>
                 </div>
-                <div className="datos-compra">
-                    <span className='text-totales bold blanco'>Total Dulcería:</span>
-                    <span className="text-totales alter1">
-                        <RenderCurrency value={getTotalDulceria()} className="text-totales alter1" />
-                    </span>
-                </div>
+                {llevaDulceria() && (
+                    <div className="datos-compra">
+                        <span className='text-totales bold blanco'>Total Dulcería:</span>
+                        <span className="text-totales alter1">
+                            <RenderCurrency value={getTotalDulceria()} className="text-totales alter1" />
+                        </span>
+                    </div>
+                )}
                 <div className="datos-compra">
                     <span className='text-totales bold blanco'>Total Compra:</span>
                     <span className="text-totales alter1">

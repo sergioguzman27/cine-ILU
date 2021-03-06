@@ -4,6 +4,7 @@ import CompraForm from './CompraForm';
 import { Modal } from 'react-responsive-modal';
 import LoadMask from '../../components/LoadMask';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 import './styles.scss';
 
 class CompraTickets extends Component {
@@ -80,6 +81,13 @@ class CompraTickets extends Component {
         </Modal>
     )
 
+    llevaDulceria = () => {
+        const  { item } = this.props;
+        const hoy = moment(item.fecha_hora_inicio);
+        console.log("hoy ", hoy.day())
+        return hoy.day() !== 6;
+    }
+
     render() {
         const { loader, item } = this.props;
         return (
@@ -95,7 +103,7 @@ class CompraTickets extends Component {
                         </div>
                     </div>
                     {(item && item.id) && (
-                        <CompraForm {...this.props} onSubmit={this.onSubmit} />
+                        <CompraForm {...this.props} llevaDulceria={this.llevaDulceria} onSubmit={this.onSubmit} />
                     )}
                 </LoadMask>
             </div>

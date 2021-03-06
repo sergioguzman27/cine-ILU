@@ -8,6 +8,7 @@ import Proximamente from './pages/Proximamente';
 import Funciones from './pages/Funciones';
 import DetalleFuncion from './pages/DetalleFuncion';
 import CompraTickets from './pages/CompraTickets';
+import Eliminar from './pages/Eliminar';
 
 const Router = () => {
     return (
@@ -18,6 +19,7 @@ const Router = () => {
                 <BaseRoute exact path="/funciones" component={Funciones} />
                 <BaseRoute exact path="/funcion/:id" component={DetalleFuncion} />
                 <BaseRoute exact path="/comprar/:id" component={CompraTickets} />
+                <BaseRoute exact path="/eliminar" component={Eliminar} />
             </Switch>
         </HashRouter>
     )
